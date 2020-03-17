@@ -1,0 +1,4 @@
+mutation addPost {
+  post1: addPost(id:10 author: "AUTHORNAME" title: "A series of posts, Volume 5" content: "Some content" url: "https://aws.amazon.com/appsync/" ) { title }
+}
+

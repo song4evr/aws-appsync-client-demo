@@ -1,0 +1,52 @@
+type Mutation {
+	addPost(
+		id: ID!,
+		author: String!,
+		title: String,
+		content: String,
+		url: String
+	): Post!
+	updatePost(
+		id: ID!,
+		author: String!,
+		title: String,
+		content: String,
+		url: String,
+		ups: Int!,
+		downs: Int!,
+		expectedVersion: Int!
+	): Post!
+	deletePost(id: ID!): Post!
+}
+
+type PaginatedPosts {
+	posts: [Post!]!
+	nextToken: String
+}
+
+type Post {
+	id: ID!
+	author: String!
+	title: String
+	content: String
+	url: String
+	ups: Int
+	downs: Int
+	version: Int!
+}
+
+type Query {
+	allPost(count: Int, nextToken: String): PaginatedPosts!
+	getPost(id: ID): Post
+}
+
+type Subscription {
+	newPost: Post
+		@aws_subscribe(mutations: ["addPost"])
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
